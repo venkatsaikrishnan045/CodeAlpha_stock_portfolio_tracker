@@ -1,0 +1,38 @@
+# stock_portfolio_tracker.py
+
+def main():
+    stock_prices = {
+        "AAPL": 180,
+        "TSLA": 250,
+        "GOOGL": 2700,
+        "AMZN": 3300
+    }
+
+    portfolio = {}
+    total_value = 0
+
+    print("Enter your stock holdings (type 'done' to finish):")
+    while True:
+        stock = input("Stock symbol (e.g., AAPL): ").upper()
+        if stock == "DONE":
+            break
+        if stock not in stock_prices:
+            print("Stock not found in price list. Try again.")
+            continue
+        quantity = int(input(f"Quantity of {stock}: "))
+        portfolio[stock] = quantity
+        total_value += stock_prices[stock] * quantity
+
+    print("\nYour Portfolio:")
+    for stock, qty in portfolio.items():
+        print(f"{stock}: {qty} x {stock_prices[stock]} = {qty * stock_prices[stock]}")
+
+    print(f"\nTotal Investment Value: ${total_value}")
+
+    with open("portfolio_report.txt", "w") as file:
+        for stock, qty in portfolio.items():
+            file.write(f"{stock}: {qty} x {stock_prices[stock]} = {qty * stock_prices[stock]}\n")
+        file.write(f"\nTotal Investment Value: ${total_value}")
+
+if __name__ == "__main__":
+    main()
